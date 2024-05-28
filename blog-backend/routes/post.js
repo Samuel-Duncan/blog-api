@@ -11,6 +11,6 @@ router.get('/:postId', postController.postDetail);
 
 router.put('/:postId', postController.postUpdate);
 
-router.delete('/:postId', (req, res) => {});
+router.delete('/:postId', postController.postDelete);
 
 module.exports = router;

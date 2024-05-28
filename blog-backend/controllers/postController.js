@@ -21,6 +21,7 @@ exports.postCreate = [
     .notEmpty()
     .withMessage('Post text is required.')
     .escape(),
+  body('isPublished').isBoolean().optional(),
 
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
@@ -34,6 +35,7 @@ exports.postCreate = [
     const post = new Post({
       title: req.body.title,
       text: req.body.text,
+      isPublished: req.body.isPublished,
       author: user._id,
     });
 
@@ -73,13 +75,20 @@ exports.postUpdate = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
+    const post = new Post({
+      title: req.body.title,
+      text: req.body.text,
+      isPublished: req.body.isPublished,
+      _id: req.params.id,
+    });
+
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array(), post });
     }
 
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.id,
-      { title: req.body.title, text: req.body.text },
+      post,
       { new: true }, // Return the updated document
     );
 
@@ -88,8 +97,16 @@ exports.postUpdate = [
     }
 
     // Respond with success message and optionally the updated post
-    res
-      .status(200)
-      .json({ message: 'Post updated successfully!', updatedPost });
+    res.status(200).json({ message: 'Post updated successfully!' });
   }),
 ];
+
+exports.postDelete = asyncHandler(async (req, res, next) => {
+  const post = await Post.findByIdAndDelete(req.params.id);
+
+  if (!post) {
+    return res.status(404).json({ message: 'Post not found!' });
+  }
+
+  res.status(200).json({ message: 'Post deleted successfully!' });
+});
