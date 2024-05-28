@@ -6,6 +6,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const mongoose = require('./db');
 
+const postRouter = require('./routes/post');
+
 const app = express();
 
 app.use(logger('dev'));
@@ -14,6 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/posts', postRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
