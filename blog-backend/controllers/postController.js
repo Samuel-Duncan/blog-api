@@ -7,6 +7,9 @@ const User = require('../models/user');
 exports.postList = asyncHandler(async (req, res, next) => {
   const allPosts = await Post.find({}).sort({ timestamp: -1 });
 
+  if (!allPosts) {
+    res.json({ message: 'No posts found!' });
+  }
   res.json(allPosts);
 });
 
