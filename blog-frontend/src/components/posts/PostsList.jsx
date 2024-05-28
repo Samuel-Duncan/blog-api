@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const PostsList = () => {
   const [posts, setPosts] = useState([]);
@@ -12,12 +12,10 @@ const PostsList = () => {
       setError(null);
 
       try {
-        const response = await axios.get(
-          'http://localhost:3000/posts',
-        );
+        const response = await axios.get("http://localhost:3000/posts");
         setPosts(response.data);
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error("Error fetching posts:", error);
         setError(error);
       } finally {
         setIsLoading(false);
@@ -36,7 +34,7 @@ const PostsList = () => {
   }
 
   if (posts.length === 0) {
-    return <div>No posts found!</div>;
+    return <div className="text-red-500">No posts found!</div>;
   }
 
   return (
