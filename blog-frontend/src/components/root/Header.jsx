@@ -46,10 +46,13 @@ const Header = () => {
               <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                 {/* Sidebar content here */}
                 <li>
-                  <a>Sidebar Item 1</a>
+                  <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a>Sidebar Item 2</a>
+                  <Link to="/posts">Posts</Link>
+                </li>
+                <li>
+                  <Link to="/posts/create">Create Post</Link>
                 </li>
               </ul>
             </div>
