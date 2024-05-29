@@ -5,39 +5,59 @@ const Header = () => {
     <>
       <header className="bg-gray-400 bg-opacity-100 shadow-lg">
         <div className="flex items-center justify-between px-3 py-4">
-          {/* MENU */}
-          <div className="text-center">
-            <button
-              className=" rounded-md px-0.5 py-0.5 text-sm hover:bg-neutral-300 focus:bg-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-300"
-              data-drawer-placement="left"
-              type="button"
-              data-drawer-target="drawer-navigation"
-              data-drawer-show="drawer-navigation"
-              aria-controls="drawer-navigation"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="icon icon-tabler icon-tabler-menu-2"
-                width={24}
-                height={24}
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+          <div className="drawer z-10">
+            <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+              {/* Page content here */}
+              <button
+                className=" rounded-md px-0.5 py-0.5 text-sm hover:bg-neutral-300 focus:bg-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-300"
+                data-drawer-placement="left"
+                type="button"
+                data-drawer-target="drawer-navigation"
+                data-drawer-show="drawer-navigation"
+                aria-controls="drawer-navigation"
               >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M4 6l16 0" />
-                <path d="M4 12l16 0" />
-                <path d="M4 18l16 0" />
-              </svg>
-            </button>
+                <label htmlFor="my-drawer" className="drawer-button">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="icon icon-tabler icon-tabler-menu-2 text-black "
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 6l16 0" />
+                    <path d="M4 12l16 0" />
+                    <path d="M4 18l16 0" />
+                  </svg>
+                </label>
+              </button>
+            </div>
+            <div className="drawer-side">
+              <label
+                htmlFor="my-drawer"
+                aria-label="close sidebar"
+                className="drawer-overlay"
+              ></label>
+              <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                {/* Sidebar content here */}
+                <li>
+                  <a>Sidebar Item 1</a>
+                </li>
+                <li>
+                  <a>Sidebar Item 2</a>
+                </li>
+              </ul>
+            </div>
           </div>
           {/* LOGO */}
 
           <h1 className="min-w-20 max-w-20">
-            <Link to="/posts">
+            <Link to="/">
               <svg
                 aria-hidden="true"
                 focusable="false"

@@ -47,7 +47,6 @@ const PostsList = () => {
             <Link to={`/posts/${post._id}`}>
               <h3>{post.title}</h3>
             </Link>
-            <p>{post.text}</p>
           </li>
         ))}
       </ul>
