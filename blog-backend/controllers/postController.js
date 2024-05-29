@@ -52,8 +52,7 @@ exports.postCreate = [
 ];
 
 exports.postDetail = asyncHandler(async (req, res, next) => {
-  const post = await Post.findById(req.params.id);
-
+  const post = await Post.findById(req.params.postId);
   if (post === null) {
     const err = new Error('Post not found');
     err.status = 404;
@@ -82,7 +81,7 @@ exports.postUpdate = [
       title: req.body.title,
       text: req.body.text,
       isPublished: req.body.isPublished,
-      _id: req.params.id,
+      _id: req.params.postId,
     });
 
     if (!errors.isEmpty()) {
@@ -90,7 +89,7 @@ exports.postUpdate = [
     }
 
     const updatedPost = await Post.findByIdAndUpdate(
-      req.params.id,
+      req.params.postId,
       post,
       { new: true }, // Return the updated document
     );
@@ -105,7 +104,7 @@ exports.postUpdate = [
 ];
 
 exports.postDelete = asyncHandler(async (req, res, next) => {
-  const post = await Post.findByIdAndDelete(req.params.id);
+  const post = await Post.findByIdAndDelete(req.params.postId);
 
   if (!post) {
     return res.status(404).json({ message: 'Post not found!' });
