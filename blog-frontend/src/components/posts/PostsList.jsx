@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 const PostsList = () => {
   const [posts, setPosts] = useState([]);
@@ -13,8 +12,14 @@ const PostsList = () => {
       setError(null);
 
       try {
-        const response = await axios.get("http://localhost:3000/posts");
-        setPosts(response.data);
+        const response = await fetch("http://localhost:3000/posts");
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch posts"); // Throw error for non-2xx responses
+        }
+
+        const data = await response.json();
+        setPosts(data);
       } catch (error) {
         console.error("Error fetching posts:", error);
         setError(error);
@@ -29,7 +34,7 @@ const PostsList = () => {
   if (isLoading) {
     return (
       <div>
-        <span className="loading loading-bars loading-lg"></span>
+        <span className="loading loading-bars loading-lg px-4 py-2"></span>
       </div>
     );
   }
@@ -39,11 +44,11 @@ const PostsList = () => {
   }
 
   if (posts.length === 0) {
-    return <div className="text-red-500">No posts found!</div>;
+    return <div className="px-4 py-2 text-red-500">No posts found!</div>;
   }
 
   return (
-    <div>
+    <div className="px-4 py-2">
       <h2>Posts</h2>
       <ul>
         {posts.map((post) => (

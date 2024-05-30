@@ -1,6 +1,5 @@
-import { useState } from "react";
-import axios from "axios"; // Install axios using npm or yarn (npm install axios)
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import PostForm from "./PostForm";
 
 const PostCreate = () => {
@@ -15,28 +14,30 @@ const PostCreate = () => {
     setErrors([]); // Clear previous errors on submission
 
     try {
-      const response = await axios.post("http://localhost:3000/posts/create", {
-        title,
-        text,
-        isPublished,
+      const response = await fetch("http://localhost:3000/posts/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, text, isPublished }),
       });
 
-      if (response.status !== 201) {
-        setErrors(response.data.errors); // Set validation errors from backend
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error creating post:", errorData);
+        setErrors(errorData.errors);
         return;
-      }
+      } else {
+        const data = await response.json();
 
-      const data = response.data;
-      setMessage("Post submitted successfully!"); // Set success message
-      // Handle successful creation (e.g., redirect)
-      navigate("/posts");
+        setMessage(data.message);
+        // Handle successful creation (e.g., redirect)
+      }
     } catch (error) {
       console.error("Error creating post:", error);
     }
   };
 
   return (
-    <div className="container mx-auto px-4 lg:px-20">
+    <div className="container mx-auto p-4 lg:p-20">
       {errors && errors.length > 0 && (
         <div className="mb-4 text-sm text-red-500">
           {errors.map((error) => (
@@ -44,8 +45,28 @@ const PostCreate = () => {
           ))}
         </div>
       )}
-      {message && <p className="mb-4 text-sm text-green-500">{message}</p>}
-      <PostForm onSubmit={handleSubmit} /> {/* Pass onSubmit prop */}
+      {message && (
+        <div role="alert" className="alert alert-success">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>{message}</span>
+          <Link to="/posts" className="btn">
+            Back to Posts{" "}
+          </Link>
+        </div>
+      )}
+      <PostForm onSubmit={handleSubmit} />
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 
 function PostDetails() {
   const { postId } = useParams(); // Access the captured post ID from the URL
@@ -10,10 +9,16 @@ function PostDetails() {
 
   useEffect(() => {
     setIsLoading(true);
-    axios
-      .get(`http://localhost:3000/posts/${postId}`)
+
+    fetch(`http://localhost:3000/posts/${postId}`)
       .then((response) => {
-        setPost(response.data);
+        if (!response.ok) {
+          throw new Error("Failed to fetch post details"); // Throw error for non-2xx responses
+        }
+        return response.json(); // Parse JSON response
+      })
+      .then((data) => {
+        setPost(data);
       })
       .catch((error) => {
         setError(error);
@@ -33,9 +38,12 @@ function PostDetails() {
   if (!post) return <div>Post not found.</div>;
 
   return (
-    <div>
+    <div className="px-4 py-2">
       <h1>{post.title}</h1>
       <p>{post.text}</p>
+      <Link to="/posts" className="btn">
+        Back to Posts{" "}
+      </Link>
     </div>
   );
 }
