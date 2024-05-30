@@ -34,12 +34,12 @@ exports.postCreate = [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const user = await User.findById(req.user._id, { _id: 1 });
+    // const user = await User.findById(req.user._id, { _id: 1 });
     const post = new Post({
       title: req.body.title,
       text: req.body.text,
       isPublished: req.body.isPublished,
-      author: user._id,
+      // author: user._id,
     });
 
     await post.save();

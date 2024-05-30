@@ -21,7 +21,12 @@ function PostDetails() {
       .finally(() => setIsLoading(false));
   }, [postId]);
 
-  if (isLoading) return <div>Loading post...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
 
   if (error) return <div>Error: {error.message}</div>;
 

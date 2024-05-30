@@ -31,7 +31,6 @@ const PostForm = ({ onSubmit }) => {
           className="input input-bordered w-full max-w-xs"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          required
         />
       </div>
       <div className="form-group space-x-4">
@@ -42,7 +41,6 @@ const PostForm = ({ onSubmit }) => {
           className="textarea textarea-bordered w-full max-w-xs"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          required
         />
       </div>
       <div className="form-group">

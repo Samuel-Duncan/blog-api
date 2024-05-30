@@ -27,7 +27,11 @@ const PostsList = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading posts...</div>;
+    return (
+      <div>
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
   }
 
   if (error) {
