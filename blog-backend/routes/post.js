@@ -7,10 +7,10 @@ router.get('/', postController.postList);
 
 router.post('/create', postController.postCreate);
 
-router.get('/:postId', postController.postDetail);
-
-router.put('/:postId', postController.postUpdate);
+router.put('/edit/:postId', postController.postUpdate);
 
 router.delete('/:postId', postController.postDelete);
+
+router.get('/:postId', postController.postDetail);
 
 module.exports = router;

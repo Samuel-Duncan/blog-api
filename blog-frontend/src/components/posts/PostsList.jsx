@@ -34,7 +34,7 @@ const PostsList = () => {
   if (isLoading) {
     return (
       <div>
-        <span className="loading loading-bars loading-lg px-4 py-2"></span>
+        <span className="loading loading-bars loading-lg px-4 py-4"></span>
       </div>
     );
   }
@@ -44,21 +44,31 @@ const PostsList = () => {
   }
 
   if (posts.length === 0) {
-    return <div className="px-4 py-2 text-red-500">No posts found!</div>;
+    return (
+      <div className="space-y-4 px-4 py-4">
+        <div className=" text-red-500">No posts found!</div>
+        <Link to="/posts/create" className="btn">
+          Create Post{" "}
+        </Link>
+      </div>
+    );
   }
 
   return (
-    <div className="px-4 py-2">
+    <div className="px-4 py-4">
       <h2>Posts</h2>
       <ul>
         {posts.map((post) => (
           <li key={post._id}>
-            <Link to={`/posts/${post._id}`}>
+            <Link to={`/posts/${post._id}`} className="link link-primary">
               <h3>{post.title}</h3>
             </Link>
           </li>
         ))}
       </ul>
+      <Link to="/posts/create" className="btn">
+        Create Post{" "}
+      </Link>
     </div>
   );
 };

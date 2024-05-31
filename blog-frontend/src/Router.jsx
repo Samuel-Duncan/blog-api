@@ -4,6 +4,7 @@ import Root from "./Root";
 import Home from "./components/root/Home";
 import PostsList from "./components/posts/PostsList";
 import PostCreate from "./components/posts/PostCreate";
+import PostEdit from "./components/posts/PostEdit";
 import PostDetails from "./components/posts/PostDetails";
 
 const Router = () => {
@@ -23,6 +24,10 @@ const Router = () => {
         {
           path: "/posts/create",
           element: <PostCreate />,
+        },
+        {
+          path: "/posts/edit/:postId",
+          element: <PostEdit />,
         },
         {
           path: "/posts/:postId",

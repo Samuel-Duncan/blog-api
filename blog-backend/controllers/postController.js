@@ -64,13 +64,12 @@ exports.postUpdate = [
   body('title')
     .trim()
     .notEmpty()
-    .withMessage('Post title is required.')
-    .escape(),
+    .withMessage('Post title is required.'),
   body('text')
     .trim()
     .notEmpty()
-    .withMessage('Post text is required.')
-    .escape(),
+    .withMessage('Post text is required.'),
+  body('isPublished').isBoolean().optional(),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);

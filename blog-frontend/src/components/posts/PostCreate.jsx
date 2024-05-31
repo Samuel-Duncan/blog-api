@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PostForm from "./PostForm";
 
@@ -61,9 +61,6 @@ const PostCreate = () => {
             />
           </svg>
           <span>{message}</span>
-          <Link to="/posts" className="btn">
-            Back to Posts{" "}
-          </Link>
         </div>
       )}
       <PostForm onSubmit={handleSubmit} />

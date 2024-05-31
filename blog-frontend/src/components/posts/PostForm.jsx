@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-const PostForm = ({ onSubmit }) => {
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
-  const [isPublished, setIsPublished] = useState(false);
+const PostForm = ({ onSubmit, initialValues = {} }) => {
+  const [title, setTitle] = useState(initialValues.title || "");
+  const [text, setText] = useState(initialValues.text || "");
+  const [isPublished, setIsPublished] = useState(
+    initialValues.isPublished || false,
+  );
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -57,8 +60,13 @@ const PostForm = ({ onSubmit }) => {
         </label>
       </div>
       <button type="submit" className="btn">
-        Create Post
+        {initialValues.title || initialValues.text
+          ? "Update Post"
+          : "Create Post"}
       </button>
+      <Link to="/posts" className="btn">
+        Back to Posts{" "}
+      </Link>
     </form>
   );
 };
