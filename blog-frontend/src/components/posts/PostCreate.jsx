@@ -37,7 +37,7 @@ const PostCreate = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 lg:p-20">
+    <div className="container mx-auto h-dvh p-4 lg:p-20">
       {errors && errors.length > 0 && (
         <div className="mb-4 text-sm text-red-500">
           {errors.map((error) => (

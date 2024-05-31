@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <>
-      <header className="bg-gray-400 bg-opacity-100 shadow-lg">
+      <header className="box-border bg-gray-400 bg-opacity-100 shadow-lg">
         <div className="flex items-center justify-between px-3 py-4">
           <div className="drawer z-10">
             <input id="my-drawer" type="checkbox" className="drawer-toggle" />

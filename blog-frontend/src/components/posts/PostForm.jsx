@@ -8,6 +8,8 @@ const PostForm = ({ onSubmit, initialValues = {} }) => {
     initialValues.isPublished || false,
   );
 
+  const isUpdating = Object.keys(initialValues).length !== 0;
+
   const handleSubmit = (event) => {
     event.preventDefault();
     onSubmit({ title, text, isPublished });
@@ -19,10 +21,12 @@ const PostForm = ({ onSubmit, initialValues = {} }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex h-screen w-auto flex-col items-center justify-center gap-5" // Combine relevant classes
+      className="flex h-full w-auto flex-col items-center justify-center gap-5" // Combine relevant classes
     >
       <div className="flex">
-        <h1 className="text-5xl font-bold uppercase">Create Post</h1>{" "}
+        <h1 className="text-5xl font-bold uppercase">
+          {isUpdating ? "Update" : "Create"} Post
+        </h1>{" "}
         {/* Mix classes */}
       </div>
       <div className="form-group">
@@ -60,9 +64,7 @@ const PostForm = ({ onSubmit, initialValues = {} }) => {
         </label>
       </div>
       <button type="submit" className="btn">
-        {initialValues.title || initialValues.text
-          ? "Update Post"
-          : "Create Post"}
+        {isUpdating ? "Update Post" : "Create Post"}
       </button>
       <Link to="/posts" className="btn">
         Back to Posts{" "}

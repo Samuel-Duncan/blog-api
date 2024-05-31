@@ -43,7 +43,7 @@ const PostsList = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  if (posts.length === 0) {
+  if (!posts) {
     return (
       <div className="space-y-4 px-4 py-4">
         <div className=" text-red-500">No posts found!</div>
@@ -55,8 +55,8 @@ const PostsList = () => {
   }
 
   return (
-    <div className="px-4 py-4">
-      <h2>Posts</h2>
+    <div className="space-y-4 px-4 py-4">
+      <h2 className="text-5xl">Posts</h2>
       <ul>
         {posts.map((post) => (
           <li key={post._id}>
