@@ -67,7 +67,7 @@ const PostEdit = () => {
       {post ? (
         <PostForm onSubmit={handleSubmit} initialValues={post} /> // Pass initial values from fetched post
       ) : (
-        <p>Loading post...</p>
+        <span className="loading loading-bars loading-lg mx-auto px-4 py-4"></span>
       )}
     </div>
   );
