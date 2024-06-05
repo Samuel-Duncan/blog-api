@@ -80,20 +80,20 @@ exports.signUp = [
 
 exports.logIn = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user) {
       return res
         .status(401)
-        .json({ message: 'Invalid username or password' });
+        .json({ message: 'Invalid email or password' });
     }
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res
         .status(401)
-        .json({ message: 'Invalid username or password' });
+        .json({ message: 'Invalid email or password' });
     }
 
     // Generate JWT token on successful login

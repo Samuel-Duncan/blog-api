@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// Assuming you use Fetch API for making requests
 
-const SignUpForm = () => {
+const LogInForm = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
   });
@@ -24,7 +21,7 @@ const SignUpForm = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/sign-up", {
+      const response = await fetch("http://localhost:3000/log-in", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -35,11 +32,18 @@ const SignUpForm = () => {
       }
 
       const data = await response.json();
-      console.log("Signup successful:", data);
-      // Handle successful signup (e.g., redirect to login page)
+
+      if (!data.token) {
+        setErrors(["Invalid email or password"]);
+      } else {
+        // Handle successful login (e.g., store token and redirect)
+        console.log("Login successful:");
+        localStorage.setItem("jwtToken", data.token);
+        navigate("/log-in-success");
+      }
     } catch (error) {
-      console.error("Signup error:", error);
-      setErrors(["Signup failed"]);
+      console.error("Login error:", error);
+      setErrors(["Login failed"]);
     } finally {
       setIsLoading(false);
     }
@@ -52,42 +56,14 @@ const SignUpForm = () => {
         className="flex h-full w-auto flex-col items-center justify-center gap-5"
       >
         <div className="flex">
-          <h1 className="text-5xl font-bold uppercase">Sign Up</h1>
-        </div>
-        <div className="form-group">
-          <label htmlFor="firstName" className="block text-sm font-medium">
-            First Name:
-          </label>
-          <input
-            type="text"
-            name="firstName"
-            id="firstName"
-            className="input input-bordered w-full max-w-xs focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="lastName" className="block text-sm font-medium">
-            Last Name:
-          </label>
-          <input
-            type="text"
-            name="lastName"
-            id="lastName"
-            className="input input-bordered w-full max-w-xs focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
+          <h1 className="text-5xl font-bold uppercase">Login</h1>
         </div>
         <div className="form-group">
           <label htmlFor="email" className="block text-sm font-medium">
             Email:
           </label>
           <input
-            type="email"
+            type="text"
             name="email"
             id="email"
             className="input input-bordered w-full max-w-xs focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
@@ -118,11 +94,11 @@ const SignUpForm = () => {
           </div>
         )}
         <button type="submit" className="btn btn-primary" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Sign Up"}
+          {isLoading ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>
   );
 };
 
-export default SignUpForm;
+export default LogInForm;

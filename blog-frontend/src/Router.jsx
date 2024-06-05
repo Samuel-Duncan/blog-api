@@ -6,6 +6,9 @@ import PostsList from "./components/posts/PostsList";
 import PostCreate from "./components/posts/PostCreate";
 import PostEdit from "./components/posts/PostEdit";
 import PostDetails from "./components/posts/PostDetails";
+import SignUpForm from "./components/auth/SignUpForm";
+import LogInForm from "./components/auth/LogInForm";
+import LogInSuccess from "./components/auth/LogInSuccess";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -16,6 +19,18 @@ const Router = () => {
         {
           index: true,
           element: <Home />,
+        },
+        {
+          path: "/sign-up",
+          element: <SignUpForm />,
+        },
+        {
+          path: "/log-in",
+          element: <LogInForm />,
+        },
+        {
+          path: "/log-in-success",
+          element: <LogInSuccess />,
         },
         {
           path: "/posts",

@@ -46,6 +46,11 @@ function PostDetails() {
     }
   };
 
+  const isLoggedIn = () => {
+    const token = localStorage.getItem("jwtToken");
+    return !!token;
+  };
+
   if (isLoading)
     return (
       <div>
@@ -61,20 +66,23 @@ function PostDetails() {
     <div className="space-y-4 px-4 py-4">
       <h1 className="text-3xl">{post.title}</h1>
       <p>{post.text}</p>
-      <div className="space-x-4">
-        <Link to="/posts" className="btn">
-          Back to Posts{" "}
-        </Link>
-        <Link to={`/posts/edit/${postId}`} className="btn">
-          Edit Post{" "}
-        </Link>
-        <button
-          className="btn btn-outline btn-error"
-          onClick={() => document.getElementById("my_modal_2").showModal()}
-        >
-          Delete Post
-        </button>
-      </div>
+      {isLoggedIn() && (
+        <div className="space-x-4">
+          <Link to="/posts" className="btn">
+            Back to Posts{" "}
+          </Link>
+          <Link to={`/posts/edit/${postId}`} className="btn">
+            Edit Post{" "}
+          </Link>
+          <button
+            className="btn btn-outline btn-error"
+            onClick={() => document.getElementById("my_modal_2").showModal()}
+          >
+            Delete Post
+          </button>
+        </div>
+      )}
+
       <dialog id="my_modal_2" className="modal">
         <div className="modal-box flex justify-center align-middle">
           <button className="btn btn-outline btn-error" onClick={deletePost}>
