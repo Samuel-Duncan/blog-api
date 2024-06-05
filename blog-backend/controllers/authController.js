@@ -97,7 +97,7 @@ exports.logIn = async (req, res) => {
     }
 
     // Generate JWT token on successful login
-    const payload = { userId: user._id };
+    const payload = { userId: user._id, isAdmin: user.isAdmin };
     const token = jwt.sign(payload, 'your_secret_key'); // Replace with same secret as jwtStrategy
 
     res.json({ token });
