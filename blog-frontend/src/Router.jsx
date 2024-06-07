@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Root from "./Root";
 import Home from "./components/root/Home";
+import ProtectedRoute from "./ProtectedRoute";
 import PostsList from "./components/posts/PostsList";
 import PostCreate from "./components/posts/PostCreate";
 import PostEdit from "./components/posts/PostEdit";
@@ -38,7 +39,11 @@ const Router = () => {
         },
         {
           path: "/posts/create",
-          element: <PostCreate />,
+          element: (
+            <ProtectedRoute>
+              <PostCreate />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/posts/edit/:postId",
