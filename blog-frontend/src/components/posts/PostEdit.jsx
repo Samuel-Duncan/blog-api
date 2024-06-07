@@ -26,11 +26,20 @@ const PostEdit = () => {
   const handleSubmit = async (postData) => {
     setErrors([]); // Clear previous errors
     try {
+      const token = localStorage.getItem("jwtToken"); // Retrieve JWT token from local storage
+
+      if (!token) {
+        throw new Error("Unauthorized: Missing JWT token");
+      }
+
       const response = await fetch(
         `http://localhost:3000/posts/edit/${postId}`,
         {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+          },
           body: JSON.stringify(postData),
         },
       );
@@ -42,7 +51,7 @@ const PostEdit = () => {
       } else {
         const data = await response.json();
         setMessage(data.message); // Handle success message
-        navigate("/posts"); // Redirect back to posts list
+        navigate(`/posts/${postId}`); // Redirect back to posts list
       }
     } catch (error) {
       console.error("Error editing post:", error);

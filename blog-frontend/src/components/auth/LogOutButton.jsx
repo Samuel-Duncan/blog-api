@@ -1,18 +1,18 @@
 import { useNavigate } from "react-router-dom";
 
-const LogOutButton = () => {
+const LogOutButton = (type = "notHeader") => {
   const navigate = useNavigate();
+  const isHeader = type === "header";
   const handleLogout = async () => {
     // ... existing code for clearing JWT token
     localStorage.removeItem("jwtToken");
-    // Redirect to login page
-    navigate("/log-in");
+    navigate("log-in");
   };
 
   return (
     <div>
       {/* Your component content */}
-      <button onClick={handleLogout} className="btn">
+      <button onClick={handleLogout} className={isHeader ? "btn" : ""}>
         Logout
       </button>
     </div>

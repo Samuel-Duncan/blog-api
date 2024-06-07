@@ -29,8 +29,17 @@ function PostDetails() {
 
   const deletePost = async () => {
     try {
+      const token = localStorage.getItem("jwtToken"); // Replace with your token storage key
+
+      if (!token) {
+        throw new Error("Unauthorized: Missing JWT token");
+      }
+
       const response = await fetch(`http://localhost:3000/posts/${postId}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`, // Include token in Authorization header
+        },
       });
 
       if (!response.ok) {

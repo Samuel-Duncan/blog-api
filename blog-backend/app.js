@@ -4,7 +4,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const mongoose = require('./db');
 
 const authRouter = require('./routes/auth');
@@ -19,7 +18,6 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', authRouter);
 app.use('/posts', postRouter);
 

@@ -37,7 +37,7 @@ exports.postCreate = [
       title: req.body.title,
       text: req.body.text,
       isPublished: req.body.isPublished,
-      // author: user._id,
+      // author: req.user.userId,
     });
 
     await post.save();

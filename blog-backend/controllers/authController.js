@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 const User = require('../models/user');
 
@@ -63,7 +64,7 @@ exports.signUp = [
 
     // Optional JWT generation logic
     const payload = { userId: user._id };
-    const token = jwt.sign(payload, 'your_secret_key'); // Replace with same secret as jwtStrategy
+    const token = jwt.sign(payload, process.env.JWT_SECRET); // Replace with same secret as jwtStrategy
 
     // Handle potential JWT signing error
     if (!token) {
@@ -98,7 +99,7 @@ exports.logIn = async (req, res) => {
 
     // Generate JWT token on successful login
     const payload = { userId: user._id, isAdmin: user.isAdmin };
-    const token = jwt.sign(payload, 'your_secret_key'); // Replace with same secret as jwtStrategy
+    const token = jwt.sign(payload, process.env.JWT_SECRET); // Replace with same secret as jwtStrategy
 
     res.json({ token });
   } catch (err) {

@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import AuthButton from "../auth/AuthButton";
+import LogOutButton from "../auth/LogOutButton";
 
 const Header = () => {
   return (
@@ -10,7 +12,7 @@ const Header = () => {
             <div className="drawer-content">
               {/* Page content here */}
               <button
-                className=" rounded-md px-0.5 py-0.5 text-sm hover:bg-neutral-300 focus:bg-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-300"
+                className="rounded-md px-0.5 py-0.5 text-sm hover:bg-neutral-300 focus:bg-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-300"
                 data-drawer-placement="left"
                 type="button"
                 data-drawer-target="drawer-navigation"
@@ -20,7 +22,7 @@ const Header = () => {
                 <label htmlFor="my-drawer" className="drawer-button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="icon icon-tabler icon-tabler-menu-2 text-black "
+                    className="icon icon-tabler icon-tabler-menu-2 cursor-pointer text-black "
                     width={24}
                     height={24}
                     viewBox="0 0 24 24"
@@ -53,6 +55,15 @@ const Header = () => {
                 </li>
                 <li>
                   <Link to="/posts/create">Create Post</Link>
+                </li>
+                <li>
+                  <AuthButton></AuthButton>
+                </li>
+                <li>
+                  <AuthButton type="log in"></AuthButton>
+                </li>
+                <li>
+                  <LogOutButton type="header"></LogOutButton>
                 </li>
               </ul>
             </div>

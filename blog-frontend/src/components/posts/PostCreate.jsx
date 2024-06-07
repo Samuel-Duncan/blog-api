@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PostForm from "./PostForm";
 
 const PostCreate = () => {
@@ -14,9 +14,17 @@ const PostCreate = () => {
     setErrors([]); // Clear previous errors on submission
 
     try {
+      const token = localStorage.getItem("jwtToken");
+      if (!token) {
+        throw new Error("Unauthorized: Missing JWT token");
+      }
+
       const response = await fetch("http://localhost:3000/posts/create", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+        },
         body: JSON.stringify({ title, text, isPublished }),
       });
 
@@ -30,6 +38,7 @@ const PostCreate = () => {
 
         setMessage(data.message);
         // Handle successful creation (e.g., redirect)
+        navigate("/posts");
       }
     } catch (error) {
       console.error("Error creating post:", error);
