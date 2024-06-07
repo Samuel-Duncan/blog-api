@@ -47,7 +47,11 @@ const Router = () => {
         },
         {
           path: "/posts/edit/:postId",
-          element: <PostEdit />,
+          element: (
+            <ProtectedRoute>
+              <PostEdit />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/posts/:postId",

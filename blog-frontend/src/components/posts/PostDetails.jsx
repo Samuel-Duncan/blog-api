@@ -80,7 +80,7 @@ function PostDetails() {
           <Link to="/posts" className="btn">
             Back to Posts{" "}
           </Link>
-          <Link to={`/posts/edit/${postId}`} className="btn">
+          <Link to={`/posts/edit/${postId}`} className="btn btn-primary">
             Edit Post{" "}
           </Link>
           <button
