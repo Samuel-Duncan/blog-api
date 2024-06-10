@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const PostsList = () => {
+const UserPostsList = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -11,8 +11,19 @@ const PostsList = () => {
       setIsLoading(true);
       setError(null);
 
+      const token = localStorage.getItem("jwtToken");
+      if (!token) {
+        throw new Error("Unauthorized: Missing JWT token");
+      }
+
       try {
-        const response = await fetch("http://localhost:3000/posts");
+        const response = await fetch("http://localhost:3000/posts/user-posts", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+          },
+        });
 
         if (!response.ok) {
           throw new Error("Failed to fetch posts"); // Throw error for non-2xx responses
@@ -56,7 +67,7 @@ const PostsList = () => {
 
   return (
     <div className="space-y-4 px-4 py-4">
-      <h2 className="text-5xl">Posts</h2>
+      <h2 className="text-5xl">My Posts</h2>
       <ul>
         {posts.map((post) => (
           <li key={post._id}>
@@ -73,4 +84,4 @@ const PostsList = () => {
   );
 };
 
-export default PostsList;
+export default UserPostsList;

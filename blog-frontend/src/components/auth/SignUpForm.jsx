@@ -37,6 +37,7 @@ const SignUpForm = () => {
       const data = await response.json();
       console.log("Signup successful:", data);
       // Handle successful signup (e.g., redirect to login page)
+      navigate("/log-in");
     } catch (error) {
       console.error("Signup error:", error);
       setErrors(["Signup failed"]);

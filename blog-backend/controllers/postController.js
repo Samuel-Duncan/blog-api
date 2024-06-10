@@ -1,19 +1,49 @@
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
+const verifyJWT = require('../verifyJWT');
 
 const Post = require('../models/post');
 const User = require('../models/user');
 
-exports.postList = asyncHandler(async (req, res, next) => {
-  const allPosts = await Post.find({}).sort({ timestamp: -1 });
+exports.postList = async (req, res, next) => {
+  try {
+    const allPosts = await Post.find({}).sort({ timestamp: -1 });
 
-  if (!allPosts) {
-    res.json({ message: 'No posts found!' });
+    if (!allPosts) {
+      return res.json({ message: 'No posts found!' });
+    }
+
+    res.json(allPosts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
   }
-  res.json(allPosts);
-});
+};
+
+exports.userPostList = [
+  verifyJWT,
+
+  async (req, res, next) => {
+    try {
+      const userPosts = await Post.find({
+        author: req.user.userId,
+      }).sort({ timestamp: 1 });
+
+      if (!userPosts) {
+        return res.json({ message: 'No posts found!' });
+      }
+
+      res.json(userPosts);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error' });
+    }
+  },
+];
 
 exports.postCreate = [
+  verifyJWT,
+
   body('title')
     .trim()
     .notEmpty()
@@ -24,29 +54,35 @@ exports.postCreate = [
     .withMessage('Post text is required.'),
   body('isPublished').isBoolean().optional(),
 
-  asyncHandler(async (req, res) => {
-    const errors = validationResult(req);
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-      // Respond with validation errors as JSON
-      return res.status(400).json({ errors: errors.array() });
+      if (!errors.isEmpty()) {
+        // Respond with validation errors as JSON
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      console.log(req.user.userId);
+
+      const post = new Post({
+        title: req.body.title,
+        text: req.body.text,
+        isPublished: req.body.isPublished,
+        author: req.user.userId,
+      });
+
+      await post.save();
+
+      // Respond with success message or the created message data as JSON
+      res
+        .status(201)
+        .json({ message: 'Post created successfully!', post });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error' });
     }
-
-    // const user = await User.findById(req.user._id, { _id: 1 });
-    const post = new Post({
-      title: req.body.title,
-      text: req.body.text,
-      isPublished: req.body.isPublished,
-      // author: req.user.userId,
-    });
-
-    await post.save();
-
-    // Respond with success message or the created message data as JSON
-    res
-      .status(201)
-      .json({ message: 'Post created successfully!', post });
-  }),
+  },
 ];
 
 exports.postDetail = asyncHandler(async (req, res, next) => {
@@ -61,6 +97,8 @@ exports.postDetail = asyncHandler(async (req, res, next) => {
 });
 
 exports.postUpdate = [
+  verifyJWT,
+
   body('title')
     .trim()
     .notEmpty()
@@ -78,6 +116,7 @@ exports.postUpdate = [
       title: req.body.title,
       text: req.body.text,
       isPublished: req.body.isPublished,
+      author: req.user.userId,
       _id: req.params.postId,
     });
 
@@ -100,12 +139,16 @@ exports.postUpdate = [
   }),
 ];
 
-exports.postDelete = asyncHandler(async (req, res, next) => {
-  const post = await Post.findByIdAndDelete(req.params.postId);
+exports.postDelete = [
+  verifyJWT,
 
-  if (!post) {
-    return res.status(404).json({ message: 'Post not found!' });
-  }
+  asyncHandler(async (req, res, next) => {
+    const post = await Post.findByIdAndDelete(req.params.postId);
 
-  res.status(200).json({ message: 'Post deleted successfully!' });
-});
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found!' });
+    }
+
+    res.status(200).json({ message: 'Post deleted successfully!' });
+  }),
+];

@@ -4,6 +4,7 @@ import Root from "./Root";
 import Home from "./components/root/Home";
 import ProtectedRoute from "./ProtectedRoute";
 import PostsList from "./components/posts/PostsList";
+import UserPostsList from "./components/posts/UserPostList";
 import PostCreate from "./components/posts/PostCreate";
 import PostEdit from "./components/posts/PostEdit";
 import PostDetails from "./components/posts/PostDetails";
@@ -36,6 +37,14 @@ const Router = () => {
         {
           path: "/posts",
           element: <PostsList />,
+        },
+        {
+          path: "/posts/user-posts",
+          element: (
+            <ProtectedRoute>
+              <UserPostsList />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/posts/create",

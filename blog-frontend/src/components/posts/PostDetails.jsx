@@ -62,8 +62,8 @@ function PostDetails() {
 
   if (isLoading)
     return (
-      <div>
-        <span className="loading loading-bars loading-lg p-4"></span>
+      <div className="p-4">
+        <span className="loading loading-bars loading-lg"></span>
       </div>
     );
 

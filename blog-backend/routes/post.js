@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const verifyJWT = require('../verifyJWT');
 
 const postController = require('../controllers/postController');
 
 router.get('/', postController.postList);
 
-router.post('/create', verifyJWT, postController.postCreate);
+router.get('/user-posts', postController.userPostList);
 
-router.put('/edit/:postId', verifyJWT, postController.postUpdate);
+router.post('/create', postController.postCreate);
 
-router.delete('/:postId', verifyJWT, postController.postDelete);
+router.put('/edit/:postId', postController.postUpdate);
+
+router.delete('/:postId', postController.postDelete);
 
 router.get('/:postId', postController.postDetail);
 
