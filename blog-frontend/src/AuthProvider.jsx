@@ -2,25 +2,14 @@ import { createContext, useState, useEffect } from "react";
 
 const AuthContext = createContext({
   isLoggedIn: false,
+  user: null,
   setIsLoggedIn: () => {},
-  user: {},
   setUser: () => {},
 });
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-
-  // Function to handle login/logout logic (replace with your implementation)
-  const handleLogin = (userData) => {
-    setIsLoggedIn(true);
-    setUser(userData); // Update user data on login
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUser(null); // Clear user data on logout
-  };
 
   // Check for existing token in local storage (optional)
   useEffect(() => {
@@ -34,11 +23,9 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         isLoggedIn,
-        setIsLoggedIn,
         user,
+        setIsLoggedIn,
         setUser,
-        handleLogin,
-        handleLogout,
       }}
     >
       {children}

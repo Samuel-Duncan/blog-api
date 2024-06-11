@@ -56,7 +56,7 @@ const PostsList = () => {
 
   return (
     <div className="space-y-4 px-4 py-4">
-      <h2 className="text-5xl">Posts</h2>
+      <h2 className="text-5xl">All Posts</h2>
       <ul>
         {posts.map((post) => (
           <li key={post._id}>

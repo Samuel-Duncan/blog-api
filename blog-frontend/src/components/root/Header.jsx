@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import AuthButton from "../auth/AuthButton";
 import LogOutButton from "../auth/LogOutButton";
+import AuthContext from "../../AuthProvider";
+import { useContext } from "react";
 
 const Header = () => {
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <>
       <header className="box-border bg-gray-400 bg-opacity-100 shadow-lg">
@@ -56,12 +59,16 @@ const Header = () => {
                 <li>
                   <Link to="/posts/create">Create Post</Link>
                 </li>
-                <li>
-                  <AuthButton></AuthButton>
-                </li>
-                <li>
-                  <AuthButton type="log in"></AuthButton>
-                </li>
+                {!isLoggedIn && (
+                  <>
+                    <li>
+                      <AuthButton></AuthButton>
+                    </li>
+                    <li>
+                      <AuthButton type="log in"></AuthButton>
+                    </li>
+                  </>
+                )}
                 <li>
                   <LogOutButton type="header"></LogOutButton>
                 </li>

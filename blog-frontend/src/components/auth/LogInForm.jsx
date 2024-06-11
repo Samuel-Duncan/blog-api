@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../AuthProvider";
 
 const LogInForm = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const LogInForm = () => {
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { setIsLoggedIn, setUser } = useContext(AuthContext);
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -36,9 +38,11 @@ const LogInForm = () => {
       if (!data.token) {
         setErrors(["Invalid email or password"]);
       } else {
-        // Handle successful login (e.g., store token and redirect)
+        // Handle successful login
         console.log("Login successful:");
         localStorage.setItem("jwtToken", data.token);
+        setIsLoggedIn(true);
+        setUser(data.user);
         navigate("/log-in-success");
       }
     } catch (error) {
