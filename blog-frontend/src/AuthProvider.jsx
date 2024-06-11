@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   // Check for existing token in local storage (optional)
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
+    console.log(token);
     if (token) {
       setIsLoggedIn(true); // Set initial login state based on token
     }

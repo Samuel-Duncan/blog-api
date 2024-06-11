@@ -59,7 +59,7 @@ const Header = () => {
                 <li>
                   <Link to="/posts/create">Create Post</Link>
                 </li>
-                {!isLoggedIn && (
+                {!isLoggedIn ? (
                   <>
                     <li>
                       <AuthButton></AuthButton>
@@ -68,10 +68,11 @@ const Header = () => {
                       <AuthButton type="log in"></AuthButton>
                     </li>
                   </>
+                ) : (
+                  <li>
+                    <LogOutButton type="header"></LogOutButton>
+                  </li>
                 )}
-                <li>
-                  <LogOutButton type="header"></LogOutButton>
-                </li>
               </ul>
             </div>
           </div>

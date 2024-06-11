@@ -39,10 +39,10 @@ const LogInForm = () => {
         setErrors(["Invalid email or password"]);
       } else {
         // Handle successful login
-        console.log("Login successful:");
+        console.log("Login successful:", data);
         localStorage.setItem("jwtToken", data.token);
         setIsLoggedIn(true);
-        setUser(data.user);
+        setUser(data.payload);
         navigate("/log-in-success");
       }
     } catch (error) {

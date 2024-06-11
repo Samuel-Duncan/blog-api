@@ -2,9 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../AuthProvider";
 
-const LogOutButton = (type = "notHeader") => {
-  const { setIsLoggedIn, setUser, isLoggedIn } = useContext(AuthContext);
-  console.log(isLoggedIn);
+const LogOutButton = ({ type = "notHeader" }) => {
+  const { setIsLoggedIn, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const isHeader = type === "header";
   const handleLogout = async () => {
@@ -18,7 +17,7 @@ const LogOutButton = (type = "notHeader") => {
   return (
     <div>
       {/* Your component content */}
-      <button onClick={handleLogout} className={isHeader ? "btn" : ""}>
+      <button onClick={handleLogout} className={!isHeader ? "btn" : undefined}>
         Logout
       </button>
     </div>

@@ -98,10 +98,10 @@ exports.logIn = async (req, res) => {
     }
 
     // Generate JWT token on successful login
-    const payload = { userId: user._id, isAdmin: user.isAdmin };
+    const payload = { id: user._id, firstName: user.firstName };
     const token = jwt.sign(payload, process.env.JWT_SECRET); // Replace with same secret as jwtStrategy
 
-    res.json({ token });
+    res.json({ token, payload });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
